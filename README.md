@@ -1,7 +1,7 @@
 ###Conway's Game of Life App
 
-https://github.com/ARWL2016/game-of-life-jquery 
-https://www.freecodecamp.com/challenges/build-the-game-of-life 
+https://github.com/ARWL2016/game-of-life-jquery   
+https://www.freecodecamp.com/challenges/build-the-game-of-life   
 
 ####Technology   
 1. html, css, jquery  
