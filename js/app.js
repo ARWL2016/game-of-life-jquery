@@ -9,38 +9,25 @@ $(document).ready(function(){
     };
 
     var utils = {
-        row: [], 
+        state: [], 
 
-        fillRow: function () {
-            for (let i = 0, len = 50; i < len; i++) {
-                 
-                if (Math.random() < 0.3) {
-                    utils.row.push(1);
-                } else {
-                   utils.row.push(0);
-                }
+        getInitialState: function (length) {
+            for (let i = 0; i < length; i++) {    
+                Math.random() < 0.3 ? utils.state.push(1) : utils.state.push(0);
             }
-
-            return utils.row; 
+            console.log(utils.state) ; 
         }, 
-        fillMasterArray: function () {
-             
-            for (let i = 0, len = 2; i < len; i++) {
-                var newArray = utils.fillSlaveArray();
-                console.log(newArray); 
-                // utils.master.push(newArray);  
-            }
-            // console.log(utils.master); 
-        }
+        
     };
      
 
     var App = {
-        init: function () {
-            boardSize = settings.boardSize.small; 
-            App.generateBoard(boardSize);
+        init: function () { 
+            var size = 2499;
+            utils.getInitialState(size); 
+            App.renderGame(size);
         }, 
-        generateBoard: function (size) {
+        renderGame: function (size) {
             var board = $('#board'); 
             var newCell = '<div class="cell"></div>';
             var i; 
@@ -48,15 +35,19 @@ $(document).ready(function(){
                 board.append(newCell);
             }
             $('div.cell').each(function(index){
-                this.id = index; 
+                this.id = index;
+                if (utils.state[index] === 1) {
+                    $(this).addClass("cell-alive") 
+                } else {
+                    $(this).addClass("cell-dead") 
+                }
+                ; 
             }); 
         }
     };
 
-    // App.init(); 
-    var result = utils.fillRow(); 
-    console.log(result); 
+    App.init(); 
+    
      
-
 }); //doc ready
 
