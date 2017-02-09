@@ -4,7 +4,7 @@ https://github.com/ARWL2016/game-of-life-jquery
 https://www.freecodecamp.com/challenges/build-the-game-of-life 
 
 ####Technology   
-1. html, css, jquery
+1. html, css, jquery  
 2. Development server: http-server    
 
 ####Rules 
