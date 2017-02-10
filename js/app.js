@@ -1,16 +1,9 @@
 $(document).ready(function(){
 
-    var settings = {
-        boardSize: {
-            large: 4899, 
-            medium: 3599, 
-            small: 2499
-        }
-    };
-
     var utils = {
         currentState: [], 
         nextState: [], 
+        generation: 0, 
 
         getInitialState: function (length) {
             for (let i = 0; i <= length; i++) {    
@@ -19,14 +12,14 @@ $(document).ready(function(){
             // console.log(utils.currentState) ; 
         }, 
         getNextState: function () {
-            var i=0; 
+ 
             var width = 50; 
             var liveNeighbours = 0; 
             var max = 2500; 
             var current = utils.currentState; 
             var next = utils.nextState; 
      
-            for (i=0; i < max; i++) {
+            for (let i=0; i < max; i++) {
 
             let a = current[i-51], b = current[i-50], c = current[i-49], d = current[i-1], e = current[i+1], f = current[i+49], g = current[i+50], h = current[i+51];
             
@@ -68,7 +61,7 @@ $(document).ready(function(){
                 }
                 
             }//for 
-            console.log('next state: ' + typeof next, next.length);
+            // console.log('next state: ' + typeof next, next.length);
             App.renderGame(next); 
             
         }//getNextState
@@ -82,7 +75,10 @@ $(document).ready(function(){
             utils.getInitialState(size); 
             App.createGame(size);
             App.addIdAndClass(); 
-            utils.getNextState(); 
+            setTimeout(function(){
+                utils.getNextState(); 
+            }, 1000);
+            
         }, 
         createGame: function (size) {
             var board = $('#board'); 
@@ -95,21 +91,36 @@ $(document).ready(function(){
         addIdAndClass: function () {
             $('div.cell').each(function(index){
                 this.id = index;
-                utils.currentState[index] === 1 ? $(this).addClass("cell-alive") : $(this).addClass("cell-dead"); 
+                if (utils.currentState[index] === 1) {
+                    $(this).addClass("cell-alive");
+                }
             });
         }, 
         renderGame: function(arrayToRender) {
-            // debugger; 
+            debugger; 
             setTimeout(function(){
                 $('div.cell').each(function(index){
-                arrayToRender[index] === 1 ? $(this).addClass("cell-alive") : $(this).addClass("cell-dead");
+                   
+                if (arrayToRender[index] === 0 &&  $(this).hasClass("cell-alive")) {
+                    $(this).removeClass("cell-alive"); 
+                } else if (arrayToRender[index] === 1 && !$(this).hasClass("cell-alive")) {
+                    $(this).addClass("cell-alive");
+                }
             });
 
-            }, 1000);
             utils.currentState = arrayToRender; 
             utils.nextState = []; 
-            utils.getNextState(); 
+            utils.generation += 1; 
 
+            if (utils.generation < 30) {
+                utils.getNextState(); 
+            }
+            $('#generationCounter').text(utils.generation); 
+
+        }, 1000);
+        
+            
+            
         }
     }; //App
 
