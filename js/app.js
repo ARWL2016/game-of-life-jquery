@@ -31,49 +31,33 @@ $(document).ready(function(){
             let a = current[i-51], b = current[i-50], c = current[i-49], d = current[i-1], e = current[i+1], f = current[i+49], g = current[i+50], h = current[i+51];
             
                 if (i === 0) {
-                    //topleft
                     liveNeighbours = e + g + h; 
-                    console.log('topleft');
+                    // console.log('topleft');
                 } else if (i === width - 1 ) {
-                    //topright
-                    console.log('topright');
+                    // console.log('topright');
                     liveNeighbours = d + f + g;
                 } else if (i === max - width) {
-                    // bottomleft
-                    console.log('bottomleft');
+                    // console.log('bottomleft');
                     liveNeighbours = b + c + e; 
                 } else if (i === max - 1) {
-                    //bottomright
-                    console.log('bottomright'); 
+                    // console.log('bottomright'); 
                     liveNeighbours = a + b + d;
                 } else if (i > 0 && i < (width - 1)) {
-                    //top
-                    console.log('top');
+                    // console.log('top');
                     liveNeighbours = d + e + f + g + h;
                 } else if (i % 50 === 0) {
-                    //left
-                    console.log('left');
+                    // console.log('left');
                     liveNeighbours = b + c + e + g + h;
                 } else if ((i + 1) % 50 === 0) {
-                    //right
-                    console.log('right');
+                    // console.log('right');
                     liveNeighbours = a + b + d + f + g;
                 } else if (i > max - width && i < max - 1) {
-                    //bottom 
-                    console.log('bottom');
+                    // console.log('bottom');
                     liveNeighbours = a + b + c + d + e;
                 } else {
-                    //middle 
                     // console.log('all');
                     liveNeighbours = a + b + c + d + e + f + g + h; 
                 }
-                // console.log('-----------------' + i + '-------------------');
-                
-                // console.log(a, b, c);
-                // console.log(d, e);
-                // console.log(f, g, h);
-                // console.log("liveNeighbours: " + liveNeighbours);
-                // console.log('alive?: ' + current[i]);
 
                 if (current[i] === 1 && liveNeighbours === (2 || 3) || current[i] === 0 && liveNeighbours === 3) {
                     // console.log('lives'); 
@@ -83,13 +67,10 @@ $(document).ready(function(){
                     next[i] = 0; 
                 }
                 
-            
             }//for 
-            console.log('next state: ' + next);
+            console.log('next state: ' + typeof next, next.length);
+            App.renderGame(next); 
             
-
-
-
         }//getNextState
         
     };
@@ -116,6 +97,19 @@ $(document).ready(function(){
                 this.id = index;
                 utils.currentState[index] === 1 ? $(this).addClass("cell-alive") : $(this).addClass("cell-dead"); 
             });
+        }, 
+        renderGame: function(arrayToRender) {
+            // debugger; 
+            setTimeout(function(){
+                $('div.cell').each(function(index){
+                arrayToRender[index] === 1 ? $(this).addClass("cell-alive") : $(this).addClass("cell-dead");
+            });
+
+            }, 1000);
+            utils.currentState = arrayToRender; 
+            utils.nextState = []; 
+            utils.getNextState(); 
+
         }
     }; //App
 
@@ -125,4 +119,11 @@ $(document).ready(function(){
 }); //doc ready
 
 
+//deprecated code 
 
+    // console.log('-----------------' + i + '-------------------');
+    // console.log(a, b, c);
+    // console.log(d, e);
+    // console.log(f, g, h);
+    // console.log("liveNeighbours: " + liveNeighbours);
+    // console.log('alive?: ' + current[i]);
