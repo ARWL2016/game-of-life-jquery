@@ -19,14 +19,14 @@ $(document).ready(function(){
             // console.log(utils.currentState) ; 
         }, 
         getNextState: function () {
-            var i=2499; 
+            var i=51; 
             var width = 50; 
             var liveNeighbours = 0; 
             var max = 2500; 
-            var cell = utils.currentState; 
-            console.log('cell:' + cell); 
+            var cells = utils.currentState; 
+            console.log('cell:' + cells); 
             
-            var a = cell[i-51], b = cell[i-50], c = cell[i-49], d = cell[i-1], e = cell[i+1], f = cell[i+49], g = cell[i+50], h = cell[i+51];
+            var a = cells[i-51], b = cells[i-50], c = cells[i-49], d = cells[i-1], e = cells[i+1], f = cells[i+49], g = cells[i+50], h = cells[i+51];
             
             if (i === 0) {
                 //topleft
@@ -40,36 +40,36 @@ $(document).ready(function(){
                 // bottomleft
                 console.log('bottomleft');
                 liveNeighbours = b + c + e; 
-             } else if (i === max - 1) {
+            } else if (i === max - 1) {
                 //bottomright
                 console.log('bottomright'); 
                 liveNeighbours = a + b + d;
-             }
+            } else if (i > 0 && i < (width - 1)) {
+                //top
+                console.log('top');
+                liveNeighbours = d + e + f + g + h;
+            } else if (i % 50 === 0) {
+                //left
+                console.log('left');
+                liveNeighbours = b + c + e + g + h;
+            } else if ((i + 1) % 50 === 0) {
+                //right
+                console.log('right');
+                liveNeighbours = a + b + d + f + g;
+            } else if (i > max - width && i < max - 1) {
+                //bottom 
+                console.log('bottom');
+                liveNeighbours = a + b + c + d + e;
+            } else {
+                //middle 
+                console.log('all');
+                liveNeighbours = a + b + c + d + e + f + g + h; 
+            }
 
-            // } else if (i > 0 && i < (width - 1)) {
-            //     //top
-            //     console.log('top');
-            //     var x = d + e + f + g + h;
-            // } else if (i % 50 === 0) {
-            //     //left
-            //     console.log('left');
-            //     liveNeighbours = b + c + e + g + h;
-            // } else if ((i + 1) % 50 === 0) {
-            //     //right
-            //     console.log('right');
-            //     liveNeighbours = a + b + d + f + g;
-            // } else if (i > max - width && i < max - 1) {
-            //     //bottom 
-            //     console.log('bottom');
-            //     liveNeighbours = a + b + c + d + e;
-            // } else {
-            //     //middle 
-            //     console.log('all');
-            //     liveNeighbours = a + b + c + d + e + f + g + h; 
-            // }
-
-            console.log("liveNeighbours: " + liveNeighbours);
-            console.log(a, b, c, d, e, f, g, h);
+            // console.log("liveNeighbours: " + liveNeighbours);
+            // console.log(a, b, c);
+            // console.log(d, e);
+            // console.log(f, g, h);
             
 
 
