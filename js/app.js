@@ -16,12 +16,10 @@ var utils = {
         next = utils.nextState; 
     
         for (let i=0; i < max; i++) {
-
         let a = current[i-51], b = current[i-50], c = current[i-49], d = current[i-1], e = current[i+1], f = current[i+49], g = current[i+50], h = current[i+51];
         
             if (i === 0) {
                 liveNeighbours = e + g + h; 
-                // console.log('topleft');
             } else if (i === width - 1 ) {
                 liveNeighbours = d + f + g;
             } else if (i === max - width) {
@@ -99,7 +97,7 @@ var App = {
         }, 15);
         
     }
-}; //App
+};
 
 $(document).ready(function(){
     App.init();  
