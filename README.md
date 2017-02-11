@@ -2,7 +2,9 @@
 
 https://powerful-river-12478.herokuapp.com/ 
 https://github.com/ARWL2016/game-of-life-jquery   
-https://www.freecodecamp.com/challenges/build-the-game-of-life   
+https://www.freecodecamp.com/challenges/build-the-game-of-life  
+
+**Status: deployed, incomplete, untested** 
 
 ####Technology   
 1. html, css, jquery, foundation  
