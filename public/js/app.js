@@ -5,6 +5,7 @@ var gameState = {
     state: "stopped", 
 
     getInitialState: function (size) {
+        debugger; 
         gameState.generation = 0; 
         gameState.currentState = []; 
         gameState.nextState = []; 
@@ -13,6 +14,7 @@ var gameState = {
         }
     }, 
     getNextState: function () { 
+        debugger;
         var width = 50, 
         liveNeighbours = 0, 
         max = 2500, 
@@ -56,21 +58,18 @@ var gameState = {
     
 var App = {
     init: function () { 
-        
-
-        setTimeout(function(){
+            debugger;
             var size = 2499;
             gameState.getInitialState(size); 
             App.createGame(size);
             App.addIdAndClass(); 
             gameState.state = "started"; 
             gameState.getNextState(); 
-            App.handleUserEvents(); 
-        }, 1500);
 
-                
+          
     }, 
     createGame: function (size) {
+        debugger; 
         var board = $('#board'), 
         newCell = '<div class="cell"></div>';
         for (let i=0; i<size; i++) {
@@ -78,6 +77,7 @@ var App = {
         }
     }, 
     addIdAndClass: function () {
+        debugger; 
         $('div.cell').each(function(index){
             this.id = index;
             if (gameState.currentState[index] === 1) {
@@ -105,10 +105,11 @@ var App = {
             }
             $('#generationCounter').text(gameState.generation); 
 
-        }, 50);
+        }, 500);
         
     }, 
     handleUserEvents(){
+
         $('#pauseBtn').on('click', function() {
            if (gameState.state === "started") {
                gameState.state = "stopped"; 
@@ -117,9 +118,15 @@ var App = {
                gameState.getNextState();
            }  
         })
+        $('#startBtn').on('click', function(){
+            gameState.state = "stopped";
+            App.init(); 
+        })
+
     }
 };
 
 $(document).ready(function(){
-    App.init();  
+    App.init(); 
+    App.handleUserEvents(); 
 }); 
