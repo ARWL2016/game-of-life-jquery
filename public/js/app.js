@@ -1,3 +1,7 @@
+var settings = {
+    renderDelay: 100
+}
+
 var gameState = {
     currState: [], 
     nextState: [], 
@@ -49,16 +53,19 @@ var gameState = {
         App.renderGame(); 
     }
 };
-    
+ 
 var App = {
     init: function () { 
+        gameState.state = "started"; 
         App.drawBoard(); 
         gameState.createRandomState(2499); 
         App.renderInitialGame(); 
-        App.handleUserEvents();    
+        gameState.getNextState();
     },
-    startGame: function () {
+    restartGame: function () {
         gameState.state = "started"; 
+        gameState.createRandomState(2499); 
+        App.renderInitialGame(); 
         gameState.getNextState(); 
     }, 
     drawBoard: function (size) {
@@ -72,6 +79,20 @@ var App = {
             this.id = index; 
         }); 
     }, 
+    clearBoard: function () {
+        gameState.state = "stopped"; 
+        console.log('Clear button. Gamestate :' + gameState.state); 
+        $('div.cell').each(function(){ 
+            $(this).removeClass("cell-alive"); 
+        }); 
+        App.reset(); 
+    },
+    reset: function () {
+        gameState.currState = []; 
+        gameState.nextState = []; 
+        gameState.generation = 0; 
+        gameState.state = "stopped";
+    },
     renderInitialGame: function () {
         $('div.cell').each(function(index){
             if (gameState.currState[index] === 1) {
@@ -79,22 +100,19 @@ var App = {
             }
         });
     }, 
-    renderGame: function() {
-
+    renderGame: function() { 
         setTimeout(function(){
-            $('div.cell').each(function(index){  
-                if (gameState.nextState[index] === 0 &&  $(this).hasClass("cell-alive")) {
-                    $(this).removeClass("cell-alive"); 
-                } else if (gameState.nextState[index] === 1 && !$(this).hasClass("cell-alive")) {
-                    $(this).addClass("cell-alive");
-                }
-            });
-
-            App.tick(); 
-
-
-        }, 100);
-        
+           if (gameState.generation < 1200 && gameState.state === "started") { 
+                $('div.cell').each(function(index){  
+                    if (gameState.nextState[index] === 0 &&  $(this).hasClass("cell-alive")) {
+                        $(this).removeClass("cell-alive"); 
+                    } else if (gameState.nextState[index] === 1 && !$(this).hasClass("cell-alive")) {
+                        $(this).addClass("cell-alive");
+                    }
+                });
+            App.tick();
+            }
+        }, settings.renderDelay);  
     }, 
     tick: function () {
         gameState.currState = gameState.nextState; 
@@ -106,8 +124,12 @@ var App = {
         if (gameState.generation < 1200 && gameState.state === "started") {
             gameState.getNextState();  
         }
+        return; 
     },
     handleUserEvents() { 
+        $('#startBtn').on('click', function(){
+            App.restartGame(); 
+        });
         $('#pauseBtn').on('click', function() {
            if (gameState.state === "started") {
                gameState.state = "stopped"; 
@@ -116,15 +138,18 @@ var App = {
                gameState.getNextState();
            }  
         });
-        $('#startBtn').on('click', function(){
-            App.startGame(); 
-        });
+        $('#clearBtn').on('click', function(){
+            App.clearBoard(); 
+        }); 
+        
 
     }
 };
 
 $(document).ready(function(){
-    App.init();   
+    App.init(); 
+    App.handleUserEvents();      
 }); 
+
 
 
