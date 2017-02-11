@@ -103,7 +103,7 @@ var App = {
     }, 
     renderGame: function() { 
         setTimeout(function(){
-           if (gameState.generation < 1200 && gameState.state === "started") { 
+           if (gameState.state === "started") { 
                 $('div.cell').each(function(index){  
                     if (gameState.nextState[index] === 0 &&  $(this).hasClass("cell-alive")) {
                         $(this).removeClass("cell-alive"); 
@@ -142,8 +142,6 @@ var App = {
         $('#clearBtn').on('click', function(){
             App.clearBoard(); 
         }); 
-        
-
     }
 };
 
