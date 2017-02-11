@@ -1,23 +1,23 @@
 var gameState = {
-    currentState: [], 
+    currState: [], 
     nextState: [], 
     generation: 0, 
     state: "stopped", 
 
     createRandomState: function (size) {
         for (let i = 0; i <= size; i++) { 
-            gameState.currentState[i] = Math.random() < 0.3 ? 1 : 0; 
+            gameState.currState[i] = Math.random() < 0.3 ? 1 : 0; 
         }
     }, 
     getNextState: function () { 
         var width = 50, 
         liveNeighbours = 0, 
         max = 2500, 
-        current = gameState.currentState, 
+        curr = gameState.currState, 
         next = gameState.nextState; 
 
         for (let i=0; i < max; i++) {
-        let a = current[i-51], b = current[i-50], c = current[i-49], d = current[i-1], e = current[i+1], f = current[i+49], g = current[i+50], h = current[i+51];
+        let a = curr[i-51], b = curr[i-50], c = curr[i-49], d = curr[i-1], e = curr[i+1], f = curr[i+49], g = curr[i+50], h = curr[i+51];
         
             if (i === 0) {
                 liveNeighbours = e + g + h; 
@@ -39,17 +39,14 @@ var gameState = {
                 liveNeighbours = a + b + c + d + e + f + g + h; 
             }
 
-            if (current[i] === 1 && (liveNeighbours === 2 || liveNeighbours === 3) || current[i] === 0 && liveNeighbours === 3) {
+            if (curr[i] === 1 && (liveNeighbours === 2 || liveNeighbours === 3) || curr[i] === 0 && liveNeighbours === 3) {
                 next[i] = 1; 
             } else {
                 next[i] = 0; 
             }
         }
-            if (gameState.generation < 1200 && gameState.state === "started") {
-                    App.renderGame(next); 
-            }
-
-
+        gameState.nextState = next; 
+        App.renderGame(); 
     }
 };
     
@@ -57,7 +54,7 @@ var App = {
     init: function () { 
         App.drawBoard(); 
         gameState.createRandomState(2499); 
-        App.addRandomClass(); 
+        App.renderInitialGame(); 
         App.handleUserEvents();    
     },
     startGame: function () {
@@ -75,38 +72,41 @@ var App = {
             this.id = index; 
         }); 
     }, 
-    addRandomClass: function () {
+    renderInitialGame: function () {
         $('div.cell').each(function(index){
-            if (gameState.currentState[index] === 1) {
+            if (gameState.currState[index] === 1) {
                 $(this).addClass("cell-alive");
             }
         });
     }, 
-    renderGame: function(arrayToRender) {
+    renderGame: function() {
 
         setTimeout(function(){
             $('div.cell').each(function(index){  
-                if (arrayToRender[index] === 0 &&  $(this).hasClass("cell-alive")) {
+                if (gameState.nextState[index] === 0 &&  $(this).hasClass("cell-alive")) {
                     $(this).removeClass("cell-alive"); 
-                } else if (arrayToRender[index] === 1 && !$(this).hasClass("cell-alive")) {
+                } else if (gameState.nextState[index] === 1 && !$(this).hasClass("cell-alive")) {
                     $(this).addClass("cell-alive");
                 }
             });
 
-            gameState.currentState = arrayToRender; 
-            gameState.nextState = []; 
-            gameState.generation += 1; 
+            App.tick(); 
 
 
-            $('#generationCounter').text(gameState.generation); 
-            if (gameState.generation < 1200 && gameState.state === "started") {
-                    gameState.getNextState();  
-            }
-
-
-        }, 1000);
+        }, 100);
         
     }, 
+    tick: function () {
+        gameState.currState = gameState.nextState; 
+        gameState.nextState = []; 
+
+        gameState.generation += 1; 
+        $('#generationCounter').text(gameState.generation); 
+
+        if (gameState.generation < 1200 && gameState.state === "started") {
+            gameState.getNextState();  
+        }
+    },
     handleUserEvents() { 
         $('#pauseBtn').on('click', function() {
            if (gameState.state === "started") {
@@ -124,9 +124,7 @@ var App = {
 };
 
 $(document).ready(function(){
-    App.init(); 
-     
-    
+    App.init();   
 }); 
 
 
