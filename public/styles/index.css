@@ -3,16 +3,28 @@
     box-sizing: border-box; 
 }
 
+body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; 
+}
+
 h1 {
     color: #1d8fc5;  
 }
 
+/*HOME PAGE ----------------------------*/
+
+body.homepage {
+    background-color: #222;
+    background-image: url("http://wallpapercave.com/wp/xoinmjE.jpg");
+}
 
 /*GAME BOARD ----------------------------*/
 div.board {
-    width: 506px;
-    height: 506px;
-    border: 3px solid #6f6fb7;
+    box-shadow: 1px 1px 8px 12px #2d248a;
+    width: 1000px;
+    height: 500px;
+    margin: 30px auto; 
+
 }
 
 div.cell, div.cell-alive {
@@ -25,4 +37,45 @@ div.cell, div.cell-alive {
 
 div.cell-alive {
     background-color: mediumvioletred;
+}
+
+/*NAVBAR  ----------------------------*/
+a.counter {
+    min-width: 70px; 
+}
+
+.button-group {
+    margin-bottom: 0rem;
+}
+
+.top-bar, 
+.top-bar ul {
+    background-color: #2d248a; 
+}
+
+li.menu-text {
+    color: white;
+}
+
+li a {
+    font-weight: bold; 
+    color: #89cff7; 
+}
+
+/*ABOUT PAGE  -------------------------*/
+main.about-page {
+    /*margin: 50px 50px 0px 50px;*/
+    color: #222; 
+    margin: 30px auto; 
+    width: 60%;  
+}
+
+h2.about-heading {
+    font-size: 2rem;  
+}
+
+p.attribution {
+    margin-top: 30px; 
+    padding: 5px; 
+    background-color: #EEE;
 }

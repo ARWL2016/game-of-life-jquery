@@ -7,8 +7,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="vendors/foundation/css/foundation.min.css">
         <link rel="stylesheet" href="styles/index.css" >
+        
     </head>
-    <body>
+    <body class="homepage">
         <nav class="top-bar">
             <div class="top-bar-left"> 
                 <ul class="menu">
@@ -18,17 +19,21 @@
                 </ul>
             </div>
             <div class="top-bar-right">
+                
+                    <!--<span id="generationCounter" class="counter">Generation</span>  -->
+                
                 <div class="button-group">
-                    <a id="startBtn" class="button">Restart</a>
-                    <a id="pauseBtn" class="button">Pause</a>
-                    <a id="clearBtn" class="button">Clear</a>
-
+                    
+                    <a id="startBtn" class="button hollow">Restart</a>
+                    <a id="pauseBtn" class="button hollow">Pause</a>
+                    <a id="clearBtn" class="button hollow">Clear</a>
+                    <a id="counter" class="button counter hollow alert">0</a>
                 </div>
             </div>
 
         </nav>
 
-        <p id="generationCounter">Generation</p>
+        
         <div id="board" class="board"> 
             <div class="cell"></div>
         </div>

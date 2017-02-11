@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="vendors/foundation/css/foundation.min.css">
+        <link rel="stylesheet" href="styles/index.css" >
+        
+    </head>
+    <body>
+        <nav class="top-bar">
+            <div class="top-bar-left"> 
+                <ul class="menu">
+                    <li class="menu-text">Conway's Game of Life</li>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about">About</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <main class="about-page">
+          <h2 class = "about-heading">Rules</h2>
+          <p>The universe of the Game of Life is an infinite two-dimensional orthogonal grid of square cells, each of which is in one of two possible states, alive or dead, or "populated" or "unpopulated" (the difference may seem minor, except when viewing it as an early model of human/urban behaviour simulation or how one views a blank space on a grid). Every cell interacts with its eight neighbours, which are the cells that are horizontally, vertically, or diagonally adjacent. At each step in time, the following transitions occur:</p>
+          <ol>
+            <li>Any live cell with fewer than two live neighbours dies, as if caused by underpopulation.</li> 
+            <li>Any live cell with two or three live neighbours lives on to the next generation.</li>  
+            <li>Any live cell with more than three live neighbours dies, as if by overpopulation.</li>  
+            <li>Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.</li>  
+          </ol>
+          <p>The initial pattern constitutes the seed of the system. The first generation is created by applying the above rules simultaneously to every cell in the seed—births and deaths occur simultaneously, and the discrete moment at which this happens is sometimes called a tick (in other words, each generation is a pure function of the preceding one). The rules continue to be applied repeatedly to create further generations.</p>  
+          <p><em>from Wikipedia</em></p>
+          <p class="attribution"><b>Coded by Alistair Willis, using jQuery, Foundation and Express. View the full source code at <a href="https://github.com/ARWL2016/game-of-life-jquery">Github</a>.</b></p>
+        </main>
+
+
+        <!--<script src="vendors/foundation/js/foundation.min.js"></script> -->
+        <script src="vendors/jquery/jquery.min.js"></script> 
+        <script src="js/app.js"></script>
+    </body>
+</html>

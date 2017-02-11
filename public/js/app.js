@@ -1,5 +1,5 @@
 var settings = {
-    renderDelay: 100
+    renderDelay: 25
 }
 
 var gameState = {
@@ -10,13 +10,13 @@ var gameState = {
 
     createRandomState: function (size) {
         for (let i = 0; i <= size; i++) { 
-            gameState.currState[i] = Math.random() < 0.3 ? 1 : 0; 
+            gameState.currState[i] = Math.random() < 0.15 ? 1 : 0; 
         }
     }, 
     getNextState: function () { 
-        var width = 50, 
+        var width = 100, 
         liveNeighbours = 0, 
-        max = 2500, 
+        max = 5000, 
         curr = gameState.currState, 
         next = gameState.nextState; 
 
@@ -57,14 +57,15 @@ var gameState = {
 var App = {
     init: function () { 
         gameState.state = "started"; 
-        App.drawBoard(); 
-        gameState.createRandomState(2499); 
+        App.drawBoard(4999); 
+        gameState.createRandomState(4999); 
         App.renderInitialGame(); 
         gameState.getNextState();
     },
     restartGame: function () {
         gameState.state = "started"; 
-        gameState.createRandomState(2499); 
+        gameState.generation = 0; 
+        gameState.createRandomState(4999); 
         App.renderInitialGame(); 
         gameState.getNextState(); 
     }, 
@@ -119,9 +120,9 @@ var App = {
         gameState.nextState = []; 
 
         gameState.generation += 1; 
-        $('#generationCounter').text(gameState.generation); 
+        $('#counter').text(gameState.generation); 
 
-        if (gameState.generation < 1200 && gameState.state === "started") {
+        if (gameState.state === "started") {
             gameState.getNextState();  
         }
         return; 
