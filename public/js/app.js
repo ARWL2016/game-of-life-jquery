@@ -4,24 +4,18 @@ var gameState = {
     generation: 0, 
     state: "stopped", 
 
-    getInitialState: function (size) {
-        debugger; 
-        gameState.generation = 0; 
-        gameState.currentState = []; 
-        gameState.nextState = []; 
+    createRandomState: function (size) {
         for (let i = 0; i <= size; i++) { 
             gameState.currentState[i] = Math.random() < 0.3 ? 1 : 0; 
         }
     }, 
     getNextState: function () { 
-        debugger;
         var width = 50, 
         liveNeighbours = 0, 
         max = 2500, 
         current = gameState.currentState, 
         next = gameState.nextState; 
 
-    
         for (let i=0; i < max; i++) {
         let a = current[i-51], b = current[i-50], c = current[i-49], d = current[i-1], e = current[i+1], f = current[i+49], g = current[i+50], h = current[i+51];
         
@@ -51,42 +45,45 @@ var gameState = {
                 next[i] = 0; 
             }
         }
+            if (gameState.generation < 1200 && gameState.state === "started") {
+                    App.renderGame(next); 
+            }
 
-        App.renderGame(next); 
+
     }
 };
     
 var App = {
     init: function () { 
-            debugger;
-            var size = 2499;
-            gameState.getInitialState(size); 
-            App.createGame(size);
-            App.addIdAndClass(); 
-            gameState.state = "started"; 
-            gameState.getNextState(); 
-
-          
+        App.drawBoard(); 
+        gameState.createRandomState(2499); 
+        App.addRandomClass(); 
+        App.handleUserEvents();    
+    },
+    startGame: function () {
+        gameState.state = "started"; 
+        gameState.getNextState(); 
     }, 
-    createGame: function (size) {
-        debugger; 
+    drawBoard: function (size) {
+        var boardSize = size || 2499; 
         var board = $('#board'), 
         newCell = '<div class="cell"></div>';
-        for (let i=0; i<size; i++) {
+        for (let i=0; i<boardSize; i++) { 
             board.append(newCell);
         }
-    }, 
-    addIdAndClass: function () {
-        debugger; 
         $('div.cell').each(function(index){
-            this.id = index;
+            this.id = index; 
+        }); 
+    }, 
+    addRandomClass: function () {
+        $('div.cell').each(function(index){
             if (gameState.currentState[index] === 1) {
                 $(this).addClass("cell-alive");
             }
         });
     }, 
     renderGame: function(arrayToRender) {
-        debugger; 
+
         setTimeout(function(){
             $('div.cell').each(function(index){  
                 if (arrayToRender[index] === 0 &&  $(this).hasClass("cell-alive")) {
@@ -100,16 +97,17 @@ var App = {
             gameState.nextState = []; 
             gameState.generation += 1; 
 
-            if (gameState.generation < 1200 && gameState.state === "started") {
-                gameState.getNextState(); 
-            }
-            $('#generationCounter').text(gameState.generation); 
 
-        }, 500);
+            $('#generationCounter').text(gameState.generation); 
+            if (gameState.generation < 1200 && gameState.state === "started") {
+                    gameState.getNextState();  
+            }
+
+
+        }, 1000);
         
     }, 
-    handleUserEvents(){
-
+    handleUserEvents() { 
         $('#pauseBtn').on('click', function() {
            if (gameState.state === "started") {
                gameState.state = "stopped"; 
@@ -117,16 +115,18 @@ var App = {
                gameState.state = "started"; 
                gameState.getNextState();
            }  
-        })
+        });
         $('#startBtn').on('click', function(){
-            gameState.state = "stopped";
-            App.init(); 
-        })
+            App.startGame(); 
+        });
 
     }
 };
 
 $(document).ready(function(){
     App.init(); 
-    App.handleUserEvents(); 
+     
+    
 }); 
+
+
