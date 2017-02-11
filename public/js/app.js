@@ -1,19 +1,24 @@
-var utils = {
+var gameState = {
     currentState: [], 
     nextState: [], 
     generation: 0, 
+    state: "stopped", 
 
-    getInitialState: function (length) {
-        for (let i = 0; i <= length; i++) { 
-            utils.currentState[i] = Math.random() < 0.3 ? 1 : 0; 
+    getInitialState: function (size) {
+        gameState.generation = 0; 
+        gameState.currentState = []; 
+        gameState.nextState = []; 
+        for (let i = 0; i <= size; i++) { 
+            gameState.currentState[i] = Math.random() < 0.3 ? 1 : 0; 
         }
     }, 
-    getNextState: function () {
+    getNextState: function () { 
         var width = 50, 
         liveNeighbours = 0, 
         max = 2500, 
-        current = utils.currentState, 
-        next = utils.nextState; 
+        current = gameState.currentState, 
+        next = gameState.nextState; 
+
     
         for (let i=0; i < max; i++) {
         let a = current[i-51], b = current[i-50], c = current[i-49], d = current[i-1], e = current[i+1], f = current[i+49], g = current[i+50], h = current[i+51];
@@ -51,13 +56,19 @@ var utils = {
     
 var App = {
     init: function () { 
-        var size = 2499;
-        utils.getInitialState(size); 
-        App.createGame(size);
-        App.addIdAndClass(); 
+        
+
         setTimeout(function(){
-            utils.getNextState(); 
-        }, 500);         
+            var size = 2499;
+            gameState.getInitialState(size); 
+            App.createGame(size);
+            App.addIdAndClass(); 
+            gameState.state = "started"; 
+            gameState.getNextState(); 
+            App.handleUserEvents(); 
+        }, 1500);
+
+                
     }, 
     createGame: function (size) {
         var board = $('#board'), 
@@ -69,7 +80,7 @@ var App = {
     addIdAndClass: function () {
         $('div.cell').each(function(index){
             this.id = index;
-            if (utils.currentState[index] === 1) {
+            if (gameState.currentState[index] === 1) {
                 $(this).addClass("cell-alive");
             }
         });
@@ -85,17 +96,27 @@ var App = {
                 }
             });
 
-            utils.currentState = arrayToRender; 
-            utils.nextState = []; 
-            utils.generation += 1; 
+            gameState.currentState = arrayToRender; 
+            gameState.nextState = []; 
+            gameState.generation += 1; 
 
-            if (utils.generation < 1200) {
-                utils.getNextState(); 
+            if (gameState.generation < 1200 && gameState.state === "started") {
+                gameState.getNextState(); 
             }
-            $('#generationCounter').text(utils.generation); 
+            $('#generationCounter').text(gameState.generation); 
 
-        }, 15);
+        }, 50);
         
+    }, 
+    handleUserEvents(){
+        $('#pauseBtn').on('click', function() {
+           if (gameState.state === "started") {
+               gameState.state = "stopped"; 
+           } else {
+               gameState.state = "started"; 
+               gameState.getNextState();
+           }  
+        })
     }
 };
 
