@@ -1,0 +1,2 @@
+The current testing setup fails.
+Requiring jquery from the devdependency works. However, running Mocha results in `"jQuery requires a window with a document"`. So we probably need to use jsdom to test jquery. See: http://stackoverflow.com/questions/38590957/how-to-fix-is-not-defined-error-when-unit-testing-jquery-with-typescript-usi 

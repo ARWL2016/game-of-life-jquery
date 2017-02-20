@@ -1,3 +1,5 @@
+var $ = require('jQuery'); 
+
 var settings = {
     renderDelay: 25
 }
