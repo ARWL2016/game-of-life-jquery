@@ -1,3 +1,4 @@
+
 var Settings = {
   renderDelay: 25, 
   width: 50, 
