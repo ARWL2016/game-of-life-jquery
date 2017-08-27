@@ -18,12 +18,18 @@ body.homepage {
 }
 
 /*GAME BOARD ----------------------------*/
-div.board {
+.game-board {
     box-shadow: 1px 1px 8px 12px #2d248a;
-    width: 1000px;
     height: 500px;
     margin: 30px auto; 
+}
 
+.small-width {
+  width: 500px;
+}
+
+.large-width {
+  width: 1000px;
 }
 
 div.cell, div.cell-alive {
@@ -39,7 +45,16 @@ div.cell-alive {
 }
 
 /*NAVBAR  ----------------------------*/
-a.counter {
+
+.button-group .control-btn {
+  margin-right: 3px;
+}
+
+.control-btn:hover {
+  text-decoration: underline;
+}
+
+.counter {
     min-width: 70px; 
 }
 
@@ -52,13 +67,17 @@ a.counter {
     background-color: #2d248a; 
 }
 
-li.menu-text {
+.menu-text {
     color: white;
 }
 
-li a {
+.page-link {
     font-weight: bold; 
     color: #89cff7; 
+}
+
+.page-link:hover {
+  text-decoration: underline
 }
 
 /*ABOUT PAGE  -------------------------*/

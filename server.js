@@ -1,18 +1,21 @@
-var express = require('express'); 
+var express = require('express');
+var compression = require('compression');
 
-var PORT = process.env.PORT || 3000; 
-var app = express(); 
+var app = express();
 
+app.use(compression());
 app.use(express.static('public'));
 
+var PORT = process.env.PORT || 3002;
+
 app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/index.html'); 
-}); 
+  res.sendFile(__dirname + '/index.html');
+});
 
 app.get('/about', function (req, res) {
-  res.sendFile(__dirname + '/about.html'); 
-}); 
+  res.sendFile(__dirname + '/about.html');
+});
 
-app.listen(PORT, function() {
-  console.log('Listening on port ', PORT); 
+app.listen(PORT, function () {
+  console.log('Listening on port ', PORT);
 })
