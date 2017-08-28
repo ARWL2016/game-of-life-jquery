@@ -69,7 +69,8 @@ div.cell-alive {
     color: white;
 }
 
-.page-link {
+.page-link, 
+.page-link-disabled {
     font-weight: bold; 
     color: #89cff7; 
 }
@@ -77,6 +78,8 @@ div.cell-alive {
 .page-link:hover {
   text-decoration: underline
 }
+
+
 
 /*DASHBOARD  -------------------------*/
 
