@@ -1,6 +1,6 @@
 const Settings = {
   renderDelay: 100, 
-  cyclesPerSecond: 20,
+  cyclesPerSecond: 10,
   width: 50, 
   totalCells: 2500,
   widthClass: 'small-width', 
@@ -83,7 +83,9 @@ const gameState = {
       }
     }
     gameState.nextState = next;
-    App.renderGame();
+    if (gameState.state === "started") {
+      App.renderGame();
+    }
   }, 
   tick: function () {
     // prepare data for next iteration; move next state to current and empty next state array
@@ -139,10 +141,10 @@ const App = {
     App.reset();
   },
   reset: function () {
+    gameState.state = "stopped";
     gameState.currState = [];
     gameState.nextState = [];
     gameState.generation = 0;
-    gameState.state = "stopped";
   },
   renderInitialGame: function () {
     $('div.cell')
@@ -165,7 +167,9 @@ const App = {
               $(this).addClass("cell-alive");
             }
           });
-        gameState.tick();
+          if (gameState.state === "started") {
+            gameState.tick();
+          }
       }
     }, Settings.renderDelay);
   },
@@ -173,8 +177,9 @@ const App = {
   handleUserEvents() {
     $('#startBtn')
       .on('click', function () {
-        App.restartGame();
+        App.clearBoard();
         $('#pauseBtn').html('Pause');
+        App.restartGame(); 
       });
 
     $('#pauseBtn').on('click', function () {
@@ -201,20 +206,17 @@ const App = {
     });
 
     $('#slowBtn').on('click', function () {
-      if (Settings.cyclesPerSecond > 2) {
+      if (Settings.cyclesPerSecond > 4) {
         Settings.cyclesPerSecond -=2; 
         Settings.renderDelay = 1000 / Settings.cyclesPerSecond;
         $('.speed').html('Cycles per Second : ' + Settings.cyclesPerSecond);
       }
     });
 
-
-
     $('.cell').on('click', function(e) {
       if (gameState.state = "started") {
         $('#pauseBtn').click();
       }
-      
       let id = e.target.id;
       if (e.target.classList.length === 1) {
         $(this).addClass('cell-alive');
