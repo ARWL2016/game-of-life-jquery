@@ -55,10 +55,6 @@ div.cell-alive {
   text-decoration: underline;
 }
 
-.counter {
-    min-width: 70px; 
-}
-
 .button-group {
     margin-bottom: 0rem;
 }
@@ -79,6 +75,25 @@ div.cell-alive {
 
 .page-link:hover {
   text-decoration: underline
+}
+
+/*DASHBOARD  -------------------------*/
+
+.dashboard {
+  width: 320px; 
+  height: 50px; 
+  color: white;
+  background-color: transparent;
+  margin: 0 auto; 
+  padding: 20px; 
+}
+
+.counter {
+  float: left; 
+}
+
+.speed {
+  float: right;
 }
 
 /*ABOUT PAGE  -------------------------*/

@@ -1,9 +1,10 @@
 const Settings = {
-  renderDelay: 50, 
+  renderDelay: 100, 
+  cyclesPerSecond: 20,
   width: 50, 
   totalCells: 2500,
   widthClass: 'small-width', 
-  initialPopRatio: 0.15 // ratio of live to dead cells
+  initialPopRatio: 0.2 // ratio of live to dead cells
 };
 
 const gameState = {
@@ -90,7 +91,7 @@ const gameState = {
     gameState.nextState = [];
 
     gameState.generation += 1;
-    $('#counter').text(gameState.generation);
+    $('.counter').text('Generation : ' + gameState.generation);
 
     if (gameState.state === "started") {
       gameState.getNextState();
@@ -173,6 +174,7 @@ const App = {
     $('#startBtn')
       .on('click', function () {
         App.restartGame();
+        $('#pauseBtn').html('Pause');
       });
 
     $('#pauseBtn').on('click', function () {
@@ -189,6 +191,24 @@ const App = {
     $('#clearBtn').on('click', function () {
       App.clearBoard();
     });
+
+    $('#fastBtn').on('click', function () {
+      if (Settings.cyclesPerSecond < 50) {
+        Settings.cyclesPerSecond += 2;
+        Settings.renderDelay = 1000 / Settings.cyclesPerSecond;
+        $('.speed').html('Cycles per Second : ' + Settings.cyclesPerSecond);
+      }
+    });
+
+    $('#slowBtn').on('click', function () {
+      if (Settings.cyclesPerSecond > 2) {
+        Settings.cyclesPerSecond -=2; 
+        Settings.renderDelay = 1000 / Settings.cyclesPerSecond;
+        $('.speed').html('Cycles per Second : ' + Settings.cyclesPerSecond);
+      }
+    });
+
+
 
     $('.cell').on('click', function(e) {
       if (gameState.state = "started") {
