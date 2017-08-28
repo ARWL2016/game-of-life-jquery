@@ -13,9 +13,10 @@ h1 {
 
 /*HOME PAGE ----------------------------*/
 body.homepage {
-    background-color: white;
-    background-image: url("http://wallpapercave.com/wp/xoinmjE.jpg");
+    background-color: black;
+    background-image: url("../img/bg.jpg");
     background-size: cover;
+    background-repeat: no-repeat;
 }
 
 /*GAME BOARD ----------------------------*/
