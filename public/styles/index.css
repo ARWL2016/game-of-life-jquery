@@ -13,8 +13,9 @@ h1 {
 
 /*HOME PAGE ----------------------------*/
 body.homepage {
-    background-color: #222;
+    background-color: white;
     background-image: url("http://wallpapercave.com/wp/xoinmjE.jpg");
+    background-size: cover;
 }
 
 /*GAME BOARD ----------------------------*/
@@ -64,7 +65,7 @@ div.cell-alive {
 
 .top-bar, 
 .top-bar ul {
-    background-color: #2d248a; 
+    background-color: #473DAF; 
 }
 
 .menu-text {
