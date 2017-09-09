@@ -21,6 +21,6 @@ app.listen(PORT, function () {
   console.log('Listening on port ', PORT);
 })
 
-setInterval(function() {
-  https.get("https://arwl-game-of-life.herokuapp.com/");
-}, 180000);
+// setInterval(function() {
+//   https.get("https://arwl-game-of-life.herokuapp.com/");
+// }, 180000);
